@@ -27,3 +27,9 @@ AI notes:
   gameNode has children attribute, array of other nodes
   gameNode has totalChildren attribute, integer
   gameNode has winWeight, loseWeight, tieWeight from a players perspective
+  tree population algorithm:
+    1: start at root "000000000" or current state,
+    2: check for victory
+      2a: if victory, assign weight of nodes appropriately and return to parent
+      2bI: if no victory, populate children of current state with legal moves
+      2bII: sum weights of children linearly to determine own weight.
