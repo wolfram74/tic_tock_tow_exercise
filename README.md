@@ -1,0 +1,29 @@
+to run:
+git clone
+cd into directory
+bundle install
+rails s
+
+to run tests:
+while server is running, visit /specs
+
+design thoughts
+split AI and board logic into different object classes.
+AI is initialized with it's player state, 1 or 2.
+AI should be able to respond to a 9 character string of 0's, 1's and 2's and decide where to place it's marker.
+
+AI notes: 
+  Board evaluation http://rowdy.msudenver.edu/~gordona/cs1050/progs/tictactoermccsc.pdf
+    perfect square [[8,1,6],[3,5,7],[4,9,2]], columns, rows and diagnols sum to 15.
+      alt [8,1,6,3,5,7,4,9,2]
+      taken1, taken2 = Hash.new(false), Hash.new(false)
+      existingPairs1 = Hash.new(false)
+      existingPairs2 = Hash.new(false)
+      for(var key in takene){ if(takene[key]) {existinPairse[key+move]=true} }
+    keeping a table of taken moves and existing pair moves allows wins to be found by checking
+      existingPairs[15-move], if true for self, it's a win move, if true for other, it's a block move.
+  wiki article on strategy http://en.wikipedia.org/wiki/Tic-tac-toe#Strategy
+  gameTree comprised of gameNodes
+  gameNode has children attribute, array of other nodes
+  gameNode has totalChildren attribute, integer
+  gameNode has winWeight, loseWeight, tieWeight from a players perspective
