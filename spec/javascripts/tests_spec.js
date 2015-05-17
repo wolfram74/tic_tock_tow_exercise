@@ -1,14 +1,14 @@
-var gameTree = {"000000000": "string"} 
+var gameTree = new GameTree()
 describe("gameTree object", function(){
   it("comprised of game node objecs", function(){    
-    expect(typeof gameTree["000000000"] ).toBe("GameNode");
+    expect(gameTree["000000000"].constructor.name ).toBe("GameNode");
   });
 });
 
 describe("gameNode object", function(){
   it("has children gameNodes", function(){    
-    expect(typeof gameTree["000000000"].children[0] ).toBe("gameNode");
-    expect(typeof gameTree["000000000"].children.length ).toBe(9);
+    expect(gameTree["000000000"].children[0].constructor.name ).toBe("GameNode");
+    expect(gameTree["000000000"].children.length ).toBe(9);
   });
   
   it("can check victory", function(){    
@@ -33,7 +33,12 @@ describe("gameNode object", function(){
     expect(typeof gameTree["121221100"].loseWeight(1) ).toBe(.5);
     expect(typeof gameTree["121221112"].tieWeight(1) ).toBe(1);
     expect(typeof gameTree["121221112"].tieWeight(2) ).toBe(1);
-
   })
+  it("Outcome weights are zero sum", function(){
+    var root = gameTree["000000000"]
+    expect(root.winWeight[1]).toBe(root.loseWeight[2])
+    expect(root.winWeight[2]).toBe(root.loseWeight[1])
+    expect(root.tieWeight[1]).toBe(1-(root.loseWeight[2]+root.winWeight[2]))
+  });
 });
 

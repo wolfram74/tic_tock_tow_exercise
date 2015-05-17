@@ -1,9 +1,21 @@
-function GameNode(state){
+function GameNode(state, parent, tree){
   this.state = state
-  this.children = []
+  this.parent = parent
+  this.tree = tree
   this.tieWeight = {1: 1, 2:1}
   this.winWeight = {1:0, 2:0}
   this.loseWeight = {1:0, 2:0}
+  this.children = []
+  var outcome = this.outcomeCheck()
+  if(outcome){
+    this.tieWeight={1:0, 2:0}
+    this.winWeight[outcome] = 1
+    this.winWeight[outcome%2 +1] = 0
+    this.loseWeight[outcome] = 0
+    this.loseWeight[outcome%2 +1] = 1
+  } else{
+    this.populateChildren()
+  };
 };
 
 GameNode.prototype.outcomeCheck = function(){
@@ -12,7 +24,6 @@ GameNode.prototype.outcomeCheck = function(){
   var outDia = this.checkDiags()
   return outRow || outCol || outDia
 };
-
 GameNode.prototype.checkCols = function(){
   var out = 0;
   for(var col=0; col<3; col++){
@@ -22,12 +33,10 @@ GameNode.prototype.checkCols = function(){
   };
   return out
 };
-
 GameNode.prototype.checkRows = function(){
   var out = 0;
   for(var row=0; row<3; row++){
     var triplet = this.state.substring(row*3,row*3+3)
-    console.log(triplet, row)
     out = this.stringCheck(triplet)
     if (!!out){return out};
   };
@@ -44,11 +53,28 @@ GameNode.prototype.checkDiags = function(){
   };
   return out
 };
-
 GameNode.prototype.stringCheck = function(string){
   var capture = /(\d)\1\1/;
   if (capture.test(string)){
     return parseInt(capture.exec(string)[1]);
   };
   return 0
+}
+GameNode.prototype.populateChildren = function(){
+  var replaceAt = function(string, index, newvalue){
+    return string.substring(0,index) + newvalue + string.substring(index+newvalue.length)
+  };
+  var count1 = (this.state.match(/(1)/g)||[]).length
+  var count2 = (this.state.match(/(2)/g)||[]).length
+  var insert = (count1-count2)%2 + 1
+  var options = 9-(count1+count2)
+  if (!options){
+  } else {
+    var capt = /0/g
+    while((match = capt.exec(this.state))!= null){
+      var childState = replaceAt(this.state, match.index, insert.toString())
+      this.tree[childState] = new GameNode(childState, this, this.tree)
+      this.children.push(this.tree[childState])
+    };
+  };
 }
