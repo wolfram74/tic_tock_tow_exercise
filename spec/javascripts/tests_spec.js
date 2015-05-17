@@ -21,24 +21,26 @@ describe("gameNode object", function(){
   });  
 
   it("has total number of children", function(){    
-    expect(typeof gameTree["120120100"].totalChildren ).toBe(0);
-    expect(typeof gameTree["121212012"].totalChildren ).toBe(1);
-    expect(typeof gameTree["121212010"].totalChildren ).toBe(4);
+    expect(gameTree["120120100"].totalChildren ).toBe(0);
+    expect(gameTree["121212012"].totalChildren ).toBe(1);
+    expect(gameTree["121212010"].totalChildren ).toBe(4);
   });
   it("has outcome weights", function(){
-    expect(typeof gameTree["121212010"].winWeight(1) ).toBe(1);
-    expect(typeof gameTree["121212010"].winWeight(2) ).toBe(0);
-    expect(typeof gameTree["121221100"].winWeight(2) ).toBe(.5);
-    expect(typeof gameTree["121221100"].tieWeight(1) ).toBe(.5);
-    expect(typeof gameTree["121221100"].loseWeight(1) ).toBe(.5);
-    expect(typeof gameTree["121221112"].tieWeight(1) ).toBe(1);
-    expect(typeof gameTree["121221112"].tieWeight(2) ).toBe(1);
+    expect(gameTree["121212010"].winWeight[1] ).toBe(1);
+    expect(gameTree["121212010"].winWeight[2] ).toBe(0);
+    expect(gameTree["121221100"].winWeight[2] ).toBe(.5);
+    expect(gameTree["121221100"].tieWeight[1] ).toBe(.5);
+    expect(gameTree["121221100"].loseWeight[1]).toBe(.5);
+    expect(gameTree["121221112"].tieWeight[1] ).toBe(1);
+    expect(gameTree["121221112"].tieWeight[2] ).toBe(1);
   })
   it("Outcome weights are zero sum", function(){
     var root = gameTree["000000000"]
     expect(root.winWeight[1]).toBe(root.loseWeight[2])
     expect(root.winWeight[2]).toBe(root.loseWeight[1])
-    expect(root.tieWeight[1]).toBe(1-(root.loseWeight[2]+root.winWeight[2]))
+    var num1 = Math.floor(root.tieWeight[1]*1000000)
+    var num2 = Math.floor((1-(root.loseWeight[2]+root.winWeight[2]))*1000000)
+    expect(num1).toBe(num2)
   });
 });
 

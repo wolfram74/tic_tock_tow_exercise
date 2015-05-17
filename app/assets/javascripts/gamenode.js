@@ -2,10 +2,11 @@ function GameNode(state, parent, tree){
   this.state = state
   this.parent = parent
   this.tree = tree
-  this.tieWeight = {1: 1, 2:1}
+  this.tieWeight = {1: 0, 2:0}
   this.winWeight = {1:0, 2:0}
   this.loseWeight = {1:0, 2:0}
   this.children = []
+  this.totalChildren = 0
   var outcome = this.outcomeCheck()
   if(outcome){
     this.tieWeight={1:0, 2:0}
@@ -15,6 +16,12 @@ function GameNode(state, parent, tree){
     this.loseWeight[outcome%2 +1] = 1
   } else{
     this.populateChildren()
+    this.totalChildren+=this.children.length
+    if(this.children.length){
+    this.reviewChildren()    
+    } else{
+      this.tieWeight = {1: 1, 2:1}
+    }
   };
 };
 
@@ -77,4 +84,22 @@ GameNode.prototype.populateChildren = function(){
       this.children.push(this.tree[childState])
     };
   };
+}
+GameNode.prototype.reviewChildren = function(){
+  for(var childInd in this.children){
+    var child = this.children[childInd]
+    this.totalChildren += child.totalChildren
+    this.tieWeight[1] += child.tieWeight[1]
+    this.tieWeight[2] += child.tieWeight[2]
+    this.winWeight[1] += child.winWeight[1]
+    this.winWeight[2] += child.winWeight[2]
+    this.loseWeight[1] += child.loseWeight[1]
+    this.loseWeight[2] += child.loseWeight[2]
+  };
+  this.tieWeight[1] /= this.children.length
+  this.tieWeight[2] /= this.children.length
+  this.winWeight[1] /= this.children.length
+  this.winWeight[2] /= this.children.length
+  this.loseWeight[1] /= this.children.length
+  this.loseWeight[2] /= this.children.length
 }
