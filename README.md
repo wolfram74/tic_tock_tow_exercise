@@ -33,3 +33,6 @@ AI notes:
       2a: if victory, assign weight of nodes appropriately and return to parent
       2bI: if no victory, populate children of current state with legal moves
       2bII: sum weights of children linearly to determine own weight.
+  observation: current rendering of game tree is A: highly redundant, no symmetries exploited
+  B: disagrees with percentage of winning states for player 1 by about 8 percent, 2 by 3 percent, and ties 10 percent.
+  C: is definitely double counting some things, because 9! is less than .55 million
