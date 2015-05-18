@@ -68,9 +68,6 @@ GameNode.prototype.stringCheck = function(string){
   return 0
 }
 GameNode.prototype.populateChildren = function(){
-  var replaceAt = function(string, index, newvalue){
-    return string.substring(0,index) + newvalue + string.substring(index+newvalue.length)
-  };
   var count1 = (this.state.match(/(1)/g)||[]).length
   var count2 = (this.state.match(/(2)/g)||[]).length
   var insert = (count1-count2)%2 + 1
@@ -78,7 +75,7 @@ GameNode.prototype.populateChildren = function(){
   if (!!options){
     var capt = /0/g
     while((match = capt.exec(this.state))!= null){
-      var childState = replaceAt(this.state, match.index, insert.toString())
+      var childState = utilities.replaceAt(this.state, match.index, insert.toString())
       if (this.tree[childState]){
         this.children.push(this.tree[childState])
       } else{
