@@ -1,3 +1,4 @@
+var startTime = Date.now()
 var gameTree = new GameTree()
 describe("gameTree object", function(){
   it("comprised of game node objecs", function(){    
@@ -44,3 +45,5 @@ describe("gameNode object", function(){
   });
 });
 
+var endTime = Date.now()
+console.log(endTime-startTime )

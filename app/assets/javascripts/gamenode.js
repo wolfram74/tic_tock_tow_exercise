@@ -75,13 +75,16 @@ GameNode.prototype.populateChildren = function(){
   var count2 = (this.state.match(/(2)/g)||[]).length
   var insert = (count1-count2)%2 + 1
   var options = 9-(count1+count2)
-  if (!options){
-  } else {
+  if (!!options){
     var capt = /0/g
     while((match = capt.exec(this.state))!= null){
       var childState = replaceAt(this.state, match.index, insert.toString())
-      this.tree[childState] = new GameNode(childState, this, this.tree)
-      this.children.push(this.tree[childState])
+      if (this.tree[childState]){
+        this.children.push(this.tree[childState])
+      } else{
+        this.tree[childState] = new GameNode(childState, this, this.tree)
+        this.children.push(this.tree[childState])
+      };
     };
   };
 }
