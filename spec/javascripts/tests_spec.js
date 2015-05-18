@@ -78,6 +78,7 @@ describe("GameBoard object", function(){
     var player0 = new GameBoard()
     var player1 = new GameBoard()
     var player2 = new GameBoard()
+    var unfinished = new GameBoard()
     player0.play(0)
     player0.play(1)
     player0.play(2)
@@ -85,8 +86,8 @@ describe("GameBoard object", function(){
     player0.play(6)
     player0.play(4)
     player0.play(5)
-    player0.play(7)
     player0.play(8)
+    player0.play(7)
     expect(player0.outcome()).toBe(0);
     player1.play(0)
     player1.play(1)
@@ -101,11 +102,24 @@ describe("GameBoard object", function(){
     player2.play(3)
     player2.play(7)
     expect(player2.outcome()).toBe(2);
+    unfinished.play(0)
+    unfinished.play(1)
+    unfinished.play(2)
+    unfinished.play(3)
+    unfinished.play(4)
+    unfinished.play(5)
+    unfinished.play(7)
+    unfinished.play(8)
+    expect(unfinished.outcome()).toBe(-1)
   });
 });
 
+describe("",function(){
+
+});
+
 var endTime = Date.now()
-console.log(endTime-startTime )
+console.log(endTime-startTime, "miliseconds to run tests" )
 
 /*
   it("template", function(){    
