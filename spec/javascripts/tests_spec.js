@@ -45,5 +45,61 @@ describe("gameNode object", function(){
   });
 });
 
+describe("GameBoard object", function(){
+  it("new boards report a blank state", function(){
+    var testBoard = new GameBoard()
+    expect(testBoard.state).toBe("000000000");
+  });
+  it("board can have it's state changed and remembered", function(){
+    var testBoard = new GameBoard()
+    testBoard.play(2)
+    expect(testBoard.state).toBe("001000000");
+    expect(testBoard.history.length).toBe(2);
+    expect(testBoard.history[0]).toBe("000000000");
+  });
+  it("board can be undone by one step", function(){
+    var testBoard = new GameBoard()
+    testBoard.play(2)
+    testBoard.play(3)
+    expect(testBoard.state).toBe("001200000");
+    testBoard.undo()
+    expect(testBoard.state).toBe("001000000");
+  });
+  it("board can distinguish various end game states", function(){
+    var player0 = new GameBoard()
+    var player1 = new GameBoard()
+    var player2 = new GameBoard()
+    player0.play(0)
+    player0.play(1)
+    player0.play(2)
+    player0.play(3)
+    player0.play(6)
+    player0.play(4)
+    player0.play(5)
+    player0.play(7)
+    player0.play(8)
+    expect(player0.outcome()).toBe(0);
+    player1.play(0)
+    player1.play(1)
+    player1.play(3)
+    player1.play(4)
+    player1.play(6)
+    expect(player1.outcome()).toBe(1);    
+    player2.play(0)
+    player2.play(1)
+    player2.play(2)
+    player2.play(4)
+    player2.play(3)
+    player2.play(7)
+    expect(player2.outcome()).toBe(2);
+  });
+});
+
 var endTime = Date.now()
 console.log(endTime-startTime )
+
+/*
+  it("template", function(){    
+    expect().toBe();
+  });
+*/
