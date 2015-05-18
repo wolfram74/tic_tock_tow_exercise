@@ -1,5 +1,14 @@
 var startTime = Date.now()
 var gameTree = new GameTree()
+describe("utilities module", function(){
+  it("#replaceAt", function(){    
+    var test ="fart"
+    expect(utilities.replaceAt(test, 2, "s")).toBe("fast");
+    expect(utilities.replaceAt(test, 0, "d")).toBe("dart");
+  });
+
+})
+
 describe("gameTree object", function(){
   it("comprised of game node objecs", function(){    
     expect(gameTree["000000000"].constructor.name ).toBe("GameNode");
