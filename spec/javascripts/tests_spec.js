@@ -116,7 +116,7 @@ describe("GameBoard object", function(){
 describe("gameAI",function(){
   it("chooses the state with lowest chance of losing", function(){
     var testGame = new GameBoard()
-    var testAI = new gameAI(testGame)
+    var testAI = new GameAI(testGame)
     expect(testAI.pickState()).toBe("000010000");
   });
 
@@ -125,7 +125,6 @@ describe("gameAI",function(){
     var testAI = new gameAI(testGame)
     expect(testAI.makeMove()).toBe(4);
   });
-
 });
 
 var endTime = Date.now()
