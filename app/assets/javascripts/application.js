@@ -14,5 +14,6 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require utilities
+//= require gamenode
 //= require gametree
 //= require_tree .

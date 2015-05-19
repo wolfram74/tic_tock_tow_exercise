@@ -6,7 +6,6 @@ describe("utilities module", function(){
     expect(utilities.replaceAt(test, 2, "s")).toBe("fast");
     expect(utilities.replaceAt(test, 0, "d")).toBe("dart");
   });
-
 })
 
 describe("gameTree object", function(){
@@ -114,7 +113,18 @@ describe("GameBoard object", function(){
   });
 });
 
-describe("",function(){
+describe("gameAI",function(){
+  it("chooses the state with lowest chance of losing", function(){
+    var testGame = new GameBoard()
+    var testAI = new gameAI(testGame)
+    expect(testAI.pickState()).toBe("000010000");
+  });
+
+  it("returns move number to transition to the best state", function(){
+    var testGame = new GameBoard()
+    var testAI = new gameAI(testGame)
+    expect(testAI.makeMove()).toBe(4);
+  });
 
 });
 
